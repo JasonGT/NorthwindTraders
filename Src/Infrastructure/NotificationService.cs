@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Northwind.Infrastructure
 {
-    public class NotificationService : INotificationService
+    internal class NotificationService : INotificationService
     {
         public Task SendAsync(MessageDto message)
         {

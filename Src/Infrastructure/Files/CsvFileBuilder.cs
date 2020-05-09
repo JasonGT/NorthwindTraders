@@ -6,7 +6,7 @@ using Northwind.Application.Products.Queries.GetProductsFile;
 
 namespace Northwind.Infrastructure.Files
 {
-    public class CsvFileBuilder : ICsvFileBuilder
+    internal class CsvFileBuilder : ICsvFileBuilder
     {
         public byte[] BuildProductsFile(IEnumerable<ProductRecordDto> records)
         {

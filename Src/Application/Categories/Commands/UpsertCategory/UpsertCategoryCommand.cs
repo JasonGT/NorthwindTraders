@@ -16,7 +16,7 @@ namespace Northwind.Application.Categories.Commands.UpsertCategory
 
         public byte[] Picture { get; set; }
 
-        public class UpsertCategoryCommandHandler : IRequestHandler<UpsertCategoryCommand, int>
+        internal class UpsertCategoryCommandHandler : IRequestHandler<UpsertCategoryCommand, int>
         {
             private readonly INorthwindDbContext _context;
 

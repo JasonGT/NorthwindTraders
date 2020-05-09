@@ -11,7 +11,7 @@ namespace Northwind.Application.Categories.Commands.DeleteCategory
     {
         public int Id { get; set; }
 
-        public class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand>
+        internal class DeleteCategoryCommandHandler : IRequestHandler<DeleteCategoryCommand>
         {
             private readonly INorthwindDbContext _context;
 

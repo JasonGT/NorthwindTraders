@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Northwind.Application.Categories.Queries.GetCategoriesList
 {
-    public class GetCategoriesListQueryHandler : IRequestHandler<GetCategoriesListQuery, CategoriesListVm>
+    internal class GetCategoriesListQueryHandler : IRequestHandler<GetCategoriesListQuery, CategoriesListVm>
     {
         private readonly INorthwindDbContext _context;
         private readonly IMapper _mapper;

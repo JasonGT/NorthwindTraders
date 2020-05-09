@@ -9,7 +9,7 @@ namespace Northwind.Domain.Entities
             Products = new HashSet<Product>();
         }
 
-        public int CategoryId { get; set; }
+        public int CategoryId { get; private set; }
         public string CategoryName { get; set; }
         public string Description { get; set; }
         public byte[] Picture { get; set; }

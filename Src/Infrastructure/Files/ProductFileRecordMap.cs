@@ -3,7 +3,7 @@ using Northwind.Application.Products.Queries.GetProductsFile;
 
 namespace Northwind.Infrastructure.Files
 {
-    public sealed class ProductFileRecordMap : ClassMap<ProductRecordDto>
+    internal sealed class ProductFileRecordMap : ClassMap<ProductRecordDto>
     {
         public ProductFileRecordMap()
         {

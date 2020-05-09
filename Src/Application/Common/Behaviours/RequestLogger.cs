@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Northwind.Application.Common.Behaviours
 {
-    public class RequestLogger<TRequest> : IRequestPreProcessor<TRequest>
+    internal class RequestLogger<TRequest> : IRequestPreProcessor<TRequest>
     {
         private readonly ILogger _logger;
         private readonly ICurrentUserService _currentUserService;

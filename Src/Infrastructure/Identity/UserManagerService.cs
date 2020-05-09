@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Northwind.Infrastructure.Identity
 {
-    public class UserManagerService : IUserManager
+    internal class UserManagerService : IUserManager
     {
         private readonly UserManager<ApplicationUser> _userManager;
 

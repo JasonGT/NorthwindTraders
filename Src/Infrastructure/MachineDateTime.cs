@@ -3,7 +3,7 @@ using Northwind.Common;
 
 namespace Northwind.Infrastructure
 {
-    public class MachineDateTime : IDateTime
+    internal class MachineDateTime : IDateTime
     {
         public DateTime Now => DateTime.Now;
 
