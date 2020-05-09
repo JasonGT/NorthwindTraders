@@ -11,10 +11,11 @@
         "tags": [
           "Categories"
         ],
+        "summary": "Get all gategories.",
         "operationId": "Categories_GetAll",
         "responses": {
           "200": {
-            "description": "",
+            "description": "Returns list of all categories.",
             "content": {
               "application/json": {
                 "schema": {
@@ -31,9 +32,12 @@
         "tags": [
           "Categories"
         ],
+        "summary": "Updates existing category or inserts a new category.",
+        "description": "Use id of exsting category to update it. Or NULL to create a new category.",
         "operationId": "Categories_Upsert",
         "requestBody": {
           "x-name": "command",
+          "description": "Upsert category command.",
           "content": {
             "application/json": {
               "schema": {
@@ -46,7 +50,15 @@
         },
         "responses": {
           "200": {
-            "description": ""
+            "description": "Id of created/updated category.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
           },
           "default": {
             "description": "",
@@ -66,12 +78,14 @@
         "tags": [
           "Categories"
         ],
+        "summary": "Delete category by id.",
         "operationId": "Categories_Delete",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
+            "description": "Id of deleting category.",
             "schema": {
               "type": "integer",
               "format": "int32"
@@ -580,10 +594,12 @@
     "schemas": {
       "CategoriesListVm": {
         "type": "object",
+        "description": "Category view model.",
         "additionalProperties": false,
         "properties": {
           "categories": {
             "type": "array",
+            "description": "Categories list.",
             "nullable": true,
             "items": {
               "$ref": "#/components/schemas/CategoryDto"
@@ -591,28 +607,44 @@
           },
           "count": {
             "type": "integer",
+            "description": "Total categories count.",
             "format": "int32"
           }
         }
       },
       "CategoryDto": {
         "type": "object",
+        "description": "Category.",
+        "example": {
+          "id": 1,
+          "name": "Sea food"
+        },
         "additionalProperties": false,
+        "required": [
+          "id",
+          "name"
+        ],
         "properties": {
           "id": {
             "type": "integer",
+            "description": "Id.",
             "format": "int32"
           },
           "name": {
             "type": "string",
-            "nullable": true
+            "description": "Name.",
+            "maxLength": 15,
+            "minLength": 1,
+            "example": "Sea food"
           },
           "description": {
             "type": "string",
+            "description": "Description.",
             "nullable": true
           },
           "picture": {
             "type": "string",
+            "description": "Picture.",
             "format": "byte",
             "nullable": true
           }
@@ -652,23 +684,32 @@
       },
       "UpsertCategoryCommand": {
         "type": "object",
+        "description": "Update category model.",
         "additionalProperties": false,
+        "required": [
+          "name"
+        ],
         "properties": {
           "id": {
             "type": "integer",
+            "description": "Id or null.",
             "format": "int32",
             "nullable": true
           },
           "name": {
             "type": "string",
-            "nullable": true
+            "description": "Name.",
+            "maxLength": 15,
+            "minLength": 1
           },
           "description": {
             "type": "string",
+            "description": "Description.",
             "nullable": true
           },
           "picture": {
             "type": "string",
+            "description": "Base64 encoded data of a picture.",
             "format": "byte",
             "nullable": true
           }

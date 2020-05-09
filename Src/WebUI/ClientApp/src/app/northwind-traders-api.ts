@@ -15,8 +15,21 @@ import { HttpClient, HttpHeaders, HttpResponse, HttpResponseBase } from '@angula
 export const API_BASE_URL = new InjectionToken<string>('API_BASE_URL');
 
 export interface ICategoriesClient {
+    /**
+     * Get all gategories.
+     * @return Returns list of all categories.
+     */
     getAll(): Observable<CategoriesListVm>;
-    upsert(command: UpsertCategoryCommand): Observable<void>;
+    /**
+     * Updates existing category or inserts a new category.
+     * @param command Upsert category command.
+     * @return Id of created/updated category.
+     */
+    upsert(command: UpsertCategoryCommand): Observable<number>;
+    /**
+     * Delete category by id.
+     * @param id Id of deleting category.
+     */
     delete(id: number): Observable<void>;
 }
 
@@ -31,6 +44,10 @@ export class CategoriesClient implements ICategoriesClient {
         this.baseUrl = baseUrl ? baseUrl : "";
     }
 
+    /**
+     * Get all gategories.
+     * @return Returns list of all categories.
+     */
     getAll(): Observable<CategoriesListVm> {
         let url_ = this.baseUrl + "/api/Categories/GetAll";
         url_ = url_.replace(/[?&]$/, "");
@@ -79,7 +96,12 @@ export class CategoriesClient implements ICategoriesClient {
         return _observableOf<CategoriesListVm>(<any>null);
     }
 
-    upsert(command: UpsertCategoryCommand): Observable<void> {
+    /**
+     * Updates existing category or inserts a new category.
+     * @param command Upsert category command.
+     * @return Id of created/updated category.
+     */
+    upsert(command: UpsertCategoryCommand): Observable<number> {
         let url_ = this.baseUrl + "/api/Categories/Upsert";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -91,6 +113,7 @@ export class CategoriesClient implements ICategoriesClient {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json", 
+                "Accept": "application/json"
             })
         };
 
@@ -101,14 +124,14 @@ export class CategoriesClient implements ICategoriesClient {
                 try {
                     return this.processUpsert(<any>response_);
                 } catch (e) {
-                    return <Observable<void>><any>_observableThrow(e);
+                    return <Observable<number>><any>_observableThrow(e);
                 }
             } else
-                return <Observable<void>><any>_observableThrow(response_);
+                return <Observable<number>><any>_observableThrow(response_);
         }));
     }
 
-    protected processUpsert(response: HttpResponseBase): Observable<void> {
+    protected processUpsert(response: HttpResponseBase): Observable<number> {
         const status = response.status;
         const responseBlob = 
             response instanceof HttpResponse ? response.body : 
@@ -117,7 +140,10 @@ export class CategoriesClient implements ICategoriesClient {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }};
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
-            return _observableOf<void>(<any>null);
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = resultData200 !== undefined ? resultData200 : <any>null;
+            return _observableOf(result200);
             }));
         } else {
             return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
@@ -129,6 +155,10 @@ export class CategoriesClient implements ICategoriesClient {
         }
     }
 
+    /**
+     * Delete category by id.
+     * @param id Id of deleting category.
+     */
     delete(id: number): Observable<void> {
         let url_ = this.baseUrl + "/api/Categories/Delete/{id}";
         if (id === undefined || id === null)
@@ -1015,8 +1045,11 @@ export class ProductsClient implements IProductsClient {
     }
 }
 
+/** Category view model. */
 export class CategoriesListVm implements ICategoriesListVm {
+    /** Categories list. */
     categories?: CategoryDto[] | undefined;
+    /** Total categories count. */
     count?: number;
 
     constructor(data?: ICategoriesListVm) {
@@ -1058,15 +1091,23 @@ export class CategoriesListVm implements ICategoriesListVm {
     }
 }
 
+/** Category view model. */
 export interface ICategoriesListVm {
+    /** Categories list. */
     categories?: CategoryDto[] | undefined;
+    /** Total categories count. */
     count?: number;
 }
 
+/** Category. */
 export class CategoryDto implements ICategoryDto {
-    id?: number;
-    name?: string | undefined;
+    /** Id. */
+    id!: number;
+    /** Name. */
+    name!: string;
+    /** Description. */
     description?: string | undefined;
+    /** Picture. */
     picture?: string | undefined;
 
     constructor(data?: ICategoryDto) {
@@ -1104,10 +1145,15 @@ export class CategoryDto implements ICategoryDto {
     }
 }
 
+/** Category. */
 export interface ICategoryDto {
-    id?: number;
-    name?: string | undefined;
+    /** Id. */
+    id: number;
+    /** Name. */
+    name: string;
+    /** Description. */
     description?: string | undefined;
+    /** Picture. */
     picture?: string | undefined;
 }
 
@@ -1179,10 +1225,15 @@ export interface IProblemDetails {
     extensions?: { [key: string]: any; } | undefined;
 }
 
+/** Update category model. */
 export class UpsertCategoryCommand implements IUpsertCategoryCommand {
+    /** Id or null. */
     id?: number | undefined;
-    name?: string | undefined;
+    /** Name. */
+    name!: string;
+    /** Description. */
     description?: string | undefined;
+    /** Base64 encoded data of a picture. */
     picture?: string | undefined;
 
     constructor(data?: IUpsertCategoryCommand) {
@@ -1220,10 +1271,15 @@ export class UpsertCategoryCommand implements IUpsertCategoryCommand {
     }
 }
 
+/** Update category model. */
 export interface IUpsertCategoryCommand {
+    /** Id or null. */
     id?: number | undefined;
-    name?: string | undefined;
+    /** Name. */
+    name: string;
+    /** Description. */
     description?: string | undefined;
+    /** Base64 encoded data of a picture. */
     picture?: string | undefined;
 }
 
