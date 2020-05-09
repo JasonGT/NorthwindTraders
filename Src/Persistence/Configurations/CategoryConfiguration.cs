@@ -15,9 +15,9 @@ namespace Northwind.Persistence.Configurations
                 .IsRequired()
                 .HasMaxLength(15);
 
-            builder.Property(e => e.Description).HasColumnType("ntext");
+            builder.Property(e => e.Description);
 
-            builder.Property(e => e.Picture).HasColumnType("image");
+            builder.Property(e => e.Picture);
         }
     }
 }

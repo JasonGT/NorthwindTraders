@@ -26,7 +26,7 @@ namespace Northwind.Persistence.Configurations
 
             builder.Property(e => e.Fax).HasMaxLength(24);
 
-            builder.Property(e => e.HomePage).HasColumnType("ntext");
+            builder.Property(e => e.HomePage);
 
             builder.Property(e => e.Phone).HasMaxLength(24);
 
