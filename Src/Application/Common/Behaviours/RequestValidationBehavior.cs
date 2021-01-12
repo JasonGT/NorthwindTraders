@@ -20,7 +20,7 @@ namespace Northwind.Application.Common.Behaviours
 
         public Task<TResponse> Handle(TRequest request, CancellationToken cancellationToken, RequestHandlerDelegate<TResponse> next)
         {
-            var context = new ValidationContext(request);
+            var context = new ValidationContext<object>(request);
 
             var failures = _validators
                 .Select(v => v.Validate(context))

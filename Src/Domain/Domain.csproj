@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>netstandard2.1</TargetFramework>
-    <RootNamespace>Northwind.Domain</RootNamespace>
-    <AssemblyName>Northwind.Domain</AssemblyName>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+		<RootNamespace>Northwind.Domain</RootNamespace>
+		<AssemblyName>Northwind.Domain</AssemblyName>
+	</PropertyGroup>
 </Project>
